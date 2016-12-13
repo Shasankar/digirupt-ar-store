@@ -6,17 +6,14 @@ securityApp.controller('mainController',['$scope','$location','$anchorScroll','$
     $scope.items = [];
     $scope.getBill = function(){
         console.log('call to get the bill');
-        if($scope.billNo === '1234'){
-            var billApi = $resource('http://35.165.202.49:8080/AR-Digirupt/GetBill');
-            billApi.query({id:'584d32e6e4b0ce004281fd56',custom:'name,quantity'},function(response){
-                console.log(response);
+        var billApi = $resource('http://35.165.202.49:8080/AR-Digirupt/GetBill');
+	      console.log($scope.billNo);
+        billApi.query({id:$scope.billNo,custom:'name,quantity'},function(response){
+        	console.log(response);
                 response.forEach(function(res){
                     $scope.items.push({itmNm:res.name,qty:res.quantity,chkFlag:false})
-            })
+            	})
         })
-        }
-        
-        
     }
     $scope.billChk = false;
     $scope.chkItemFlags = function(){
